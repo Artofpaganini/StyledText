@@ -6,17 +6,19 @@ import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.withLink
+import com.example.myapplication.styled_dsl.own.annotations.DslStyleTextItem
 
-class StyleTextBuilder {
-    private val builder = AnnotatedString.Builder()
+@DslStyleTextItem
+class StyleTextItemBuilder {
 
-    var part: StyleTextPart? = null
+    private val itemBuilder = AnnotatedString.Builder()
+
+    var type: StyleTextType? = null
     var spanStyle: SpanStyle? = null
-    var paragraphStyle: ParagraphStyle? = null
 
-    fun build(): AnnotatedString = builder.apply {
-        when (val type = part) {
-            is StyleTextPart.Url -> {
+    fun build(): AnnotatedString = itemBuilder.apply {
+        when (val type = type) {
+            is StyleTextType.Url -> {
                 val linkAnnotation = Url(
                     url = type.text,
                     styles = spanStyle?.let(::TextLinkStyles),
@@ -26,29 +28,18 @@ class StyleTextBuilder {
                     append(type.tag)
                 }
             }
-            is StyleTextPart.Regular -> {
+            is StyleTextType.Regular -> {
                 append(type.text)
-                paragraphStyle?.let { paragraph ->
-                    addStyle(
-                        style = paragraph,
-                        start = 0,
-                        end = length
-                    )
-                }
-                spanStyle?.let { span ->
-                    addStyle(
-                        style = span,
-                        start = 0,
-                        end = length
-                    )
-                }
+                spanStyle?.let { span -> addStyle(style = span, start = 0, end = length) }
             }
             else -> return@apply
         }
     }.toAnnotatedString()
 }
 
-inline fun styledElement(block: StyleTextBuilder.() -> Unit): AnnotatedString = StyleTextBuilder().apply(block).build()
+@DslStyleTextItem
+inline fun styleTextItem(receiver: StyleTextItemBuilder.() -> Unit): AnnotatedString =
+    StyleTextItemBuilder().apply(receiver).build()
 
 //private fun AnnotatedString.Builder.applyStyle(
 //    styledString: StyledString,

@@ -1,8 +1,6 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,34 +10,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.styled_dsl.annotatedString1
-import com.example.myapplication.styled_dsl.own.StyleTextContainer
-import com.example.myapplication.styled_dsl.own.StyleTextPart
-import com.example.myapplication.styled_dsl.own.element
-import com.example.myapplication.styled_dsl.own.paragraph_style.paragraphStyle
+import com.example.myapplication.styled_dsl.own.StyleTextType
+import com.example.myapplication.styled_dsl.own.regular
 import com.example.myapplication.styled_dsl.own.span_style.spanStyle
-import com.example.myapplication.styled_dsl.own.styleBlock
+import com.example.myapplication.styled_dsl.own.styleTextContainer
+import com.example.myapplication.styled_dsl.own.url
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     //    val inlineContent = mapOf(
@@ -152,51 +141,69 @@ class MainActivity : ComponentActivity() {
                         link("https://github.com/Aghajari/AnnotatedText/tree/main") { bold { text("Кликабельная ссылка") } }
                     }
 
-                    val a: StyleTextContainer = styleBlock {
-                        element(
-                            part = StyleTextPart.Regular("123"),
+                    val a: AnnotatedString = styleTextContainer {
+                        styleTextItem {
+                            type = regular { text = "123" }
                             spanStyle = spanStyle {
                                 color = Color.Red
                                 textDecoration = TextDecoration.Underline
-                            },
-                        )
-                        element(
-                            part = StyleTextPart.Regular(" ")
-                        )
-                        element(
-                            part = StyleTextPart.Url(
-                                tag = "AndroidDev",
-                                text = "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
-                            ),
-                            spanStyle = spanStyle {
-                                color = UiKitTheme.colors
-                                textDecoration = TextDecoration.Underline
-                            },
-                            paragraphStyle = paragraphStyle {
-                                textAlign = TextAlign.Center
                             }
-                        )
-                        element(
-                            part = StyleTextPart.Regular("      ")
-                        )
-                        element(
-                            part = StyleTextPart.Regular("123"),
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular(" ")
+                        }
+                        styleTextItem {
+                            type = url {
+                                tag = "AndroidDev"
+                                text =
+                                    "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
+                            }
+                            spanStyle = spanStyle {
+                                color = UiKitTheme.lightGreen
+                                textDecoration = TextDecoration.Underline
+                            }
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular("      ")
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular("123")
                             spanStyle = spanStyle {
                                 color = Color.Blue
                                 textDecoration = TextDecoration.LineThrough
                             }
-                        )
-                    }
-                    val scope = rememberCoroutineScope()
-                    Log.w("EWQ", "onCreate: ${a.content}")
-                    val ab = remember { mutableStateOf("This text has") }
-                    LaunchedEffect(Unit) {
-                        scope.launch {
-                            for (i in 0..100) {
-                                delay(3000)
-                                ab.value += ab.value
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular("123")
+                            spanStyle = spanStyle {
+                                color = Color.Red
+                                textDecoration = TextDecoration.Underline
                             }
                         }
+                        styleTextItem {
+                            type = StyleTextType.Regular(" ")
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Url(
+                                tag = "AndroidDev",
+                                text = "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
+                            )
+                            spanStyle = spanStyle {
+                                brush = Brush.horizontalGradient(listOf(UiKitTheme.lightGreen, UiKitTheme.stringPink), 0.0f, 0.5f)
+                                textDecoration = TextDecoration.Underline
+                            }
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular("      ")
+                        }
+                        styleTextItem {
+                            type = StyleTextType.Regular("123")
+                            spanStyle = spanStyle {
+                                color = Color.Blue
+                                textDecoration = TextDecoration.LineThrough
+                            }
+                        }
+
                     }
                     Text(
                         modifier = Modifier
@@ -214,10 +221,7 @@ class MainActivity : ComponentActivity() {
                                     placeable.placeRelative(x, y)
                                 }
                             },
-//                        text = ab.value,
-                        text = buildAnnotatedString {
-                            a.content.forEach { append(it) }
-                        },
+                        text = a,
                         textAlign = TextAlign.Center,
                         overflow = Ellipsis,
                         maxLines = 2,
@@ -229,10 +233,15 @@ class MainActivity : ComponentActivity() {
 }
 
 object UiKitTheme {
-    val colors: Color
+    val lightGreen: Color
         @Composable
         @ReadOnlyComposable
         get() = LightGreen
+
+    val stringPink: Color
+        @Composable
+        @ReadOnlyComposable
+        get() = StringPink
 }
 
 val White = Color.White // #FFFFFF
@@ -251,7 +260,6 @@ val DarkGreyGradient = Color(0xFF292929) //#292929
 val LightGrey = Color(0xFFDCDCDC) // #DDDDDD
 val LightPink = Color(0xFFFEDDEB) // #FEDDEB
 val SkyPink = Color(0xFFFFEDED) // #FFEDED
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
