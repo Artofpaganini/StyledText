@@ -9,8 +9,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +37,8 @@ import com.example.myapplication.styled_dsl.own.paragraph_style.paragraphStyle
 import com.example.myapplication.styled_dsl.own.span_style.spanStyle
 import com.example.myapplication.styled_dsl.own.styleBlock
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     //    val inlineContent = mapOf(
@@ -179,10 +186,35 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+                    val scope = rememberCoroutineScope()
                     Log.w("EWQ", "onCreate: ${a.content}")
+                    val ab = remember { mutableStateOf("This text has") }
+                    LaunchedEffect(Unit) {
+                        scope.launch {
+                            for (i in 0..100) {
+                                delay(3000)
+                                ab.value += ab.value
+                            }
+                        }
+                    }
                     Text(
-                        modifier = Modifier.height(50.dp).verticalCenter(50.dp),
-                        text = "This text has a custom line height.",
+                        modifier = Modifier
+                            .height(300.dp)
+                            .width(200.dp)
+                            .layout { measurable, constraints ->
+                                val placeable = measurable.measure(
+                                    // This is how wrapContent works
+                                    constraints.copy(minWidth = 0, minHeight = 0)
+                                )
+                                layout(constraints.maxWidth, constraints.maxHeight) {
+                                    // This is how wrapContent alignment works
+                                    val x = (constraints.maxWidth - placeable.width) / 2
+                                    val y = (constraints.maxHeight - placeable.height) / 2
+                                    placeable.placeRelative(x, y)
+                                }
+                            },
+                        text = ab.value,
+                        textAlign = TextAlign.Center,
                         overflow = Ellipsis,
                         maxLines = 2,
                     )
@@ -191,23 +223,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-@SuppressLint("SuspiciousModifierThen")
-fun Modifier.verticalCenter(fixedHeightPx: Dp) = this.then(
-    layout { measurable, constraints ->
-        // Ограничиваем измерение дочернего элемента только по его содержимому
-        val placeable = measurable.measure(
-            constraints.copy(minHeight = 0, maxHeight = fixedHeightPx.roundToPx())
-        )
-
-        val yOffset = ((fixedHeightPx.roundToPx() - placeable.height) / 2).coerceAtLeast(0)
-
-        layout(constraints.maxWidth, fixedHeightPx.roundToPx()) {
-            placeable.placeRelative(0, yOffset)
-        }
-    }
-)
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
