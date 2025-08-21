@@ -8,6 +8,7 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextIndent
+import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.unit.TextUnit
 
 class ParagraphStyleBuilder {
@@ -19,6 +20,7 @@ class ParagraphStyleBuilder {
     var lineHeightStyle: LineHeightStyle? = null
     var lineBreak: LineBreak = LineBreak.Unspecified
     var hyphens: Hyphens = Hyphens.Unspecified
+    var textMotion: TextMotion? = null
 
     fun build(): ParagraphStyle = ParagraphStyle(
         textAlign = textAlign,
@@ -28,7 +30,8 @@ class ParagraphStyleBuilder {
         platformStyle = platformStyle,
         lineHeightStyle = lineHeightStyle,
         lineBreak = lineBreak,
-        hyphens = hyphens
+        hyphens = hyphens,
+        textMotion = textMotion,
     )
 }
 
