@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -168,7 +169,7 @@ class MainActivity : ComponentActivity() {
                                 text = "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
                             ),
                             spanStyle = spanStyle {
-                                color = Color.Blue
+                                color = UiKitTheme.colors
                                 textDecoration = TextDecoration.Underline
                             },
                             paragraphStyle = paragraphStyle {
@@ -213,7 +214,10 @@ class MainActivity : ComponentActivity() {
                                     placeable.placeRelative(x, y)
                                 }
                             },
-                        text = ab.value,
+//                        text = ab.value,
+                        text = buildAnnotatedString {
+                            a.content.forEach { append(it) }
+                        },
                         textAlign = TextAlign.Center,
                         overflow = Ellipsis,
                         maxLines = 2,
@@ -223,6 +227,31 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+object UiKitTheme {
+    val colors: Color
+        @Composable
+        @ReadOnlyComposable
+        get() = LightGreen
+}
+
+val White = Color.White // #FFFFFF
+val WhiteSmoke = Color(0xFFF5F5F5) // #F5F5F5
+val StringPink = Color(0xFFF81C79) // #F81C79
+val GrayishBlue = Color(0xFF9496A2) // #9496A2
+val DarkGray = Color(0xFF2F2F2F) // #2F2F2F
+val LightGreen = Color(0xFF8BC078) // #8BC078
+val DeepCarminePink = Color(0xFFCB5454) // #CB5454
+val LightGray = Color(0xFFE9E9E9) // #E9E9E9
+val DeepPink = Color(0xFFDC1769) // #DC1769
+val Silver = Color(0xFFEEEEEE) // #EEEEEE
+val DarkAshen = Color(0xFF595959) //#595959
+val LightAshen = Color(0xFFBABABA) //#BABABA
+val DarkGreyGradient = Color(0xFF292929) //#292929
+val LightGrey = Color(0xFFDCDCDC) // #DDDDDD
+val LightPink = Color(0xFFFEDDEB) // #FEDDEB
+val SkyPink = Color(0xFFFFEDED) // #FFEDED
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
