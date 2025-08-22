@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -143,7 +144,9 @@ class MainActivity : ComponentActivity() {
 
                     val a: AnnotatedString = styleTextContainer {
                         styleTextItem {
-                            type = regular { text = "123" }
+                            type = regular { text = "Надстрочный текст." }
+                            startIndex = 5
+                            endIndex = 9
                             spanStyle = spanStyle {
                                 color = Color.Red
                                 textDecoration = TextDecoration.Underline
@@ -208,7 +211,7 @@ class MainActivity : ComponentActivity() {
                     Text(
                         modifier = Modifier
                             .height(300.dp)
-                            .width(200.dp)
+                            .fillMaxWidth()
                             .layout { measurable, constraints ->
                                 val placeable = measurable.measure(
                                     // This is how wrapContent works
@@ -222,9 +225,9 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                         text = a,
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Justify,
                         overflow = Ellipsis,
-                        maxLines = 2,
+                        maxLines = 3,
                     )
                 }
             }
