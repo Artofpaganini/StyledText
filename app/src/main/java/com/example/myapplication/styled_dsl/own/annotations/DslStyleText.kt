@@ -6,11 +6,11 @@ annotation class DslStyleTextItem
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
 @DslMarker
-annotation class DslTextRegular
+annotation class DslStyleText
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
 @DslMarker
-annotation class DslTextUrl
+annotation class DslStyleTextUrl
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
 @DslMarker

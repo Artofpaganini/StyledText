@@ -4,31 +4,38 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
+import androidx.compose.ui.graphics.Color.Companion.Cyan
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.PlatformParagraphStyle
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextDecoration.Companion.Underline
+import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.myapplication.styled_dsl.annotatedString1
-import com.example.myapplication.styled_dsl.own.StyleTextType
-import com.example.myapplication.styled_dsl.own.regular
-import com.example.myapplication.styled_dsl.own.span_style.spanStyle
-import com.example.myapplication.styled_dsl.own.styleTextContainer
-import com.example.myapplication.styled_dsl.own.url
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
+import com.example.myapplication.styled_dsl.own.builders.container.styleTextContainer
+import com.example.myapplication.styled_dsl.own.builders.paragraph_style.paragraphStyle
+import com.example.myapplication.styled_dsl.own.builders.span_style.spanStyle
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -57,177 +64,116 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val inlineDividerContent = mapOf(
+            Pair(
+                // This tells the [CoreText] to replace the placeholder string "[divider]" by
+                // the composable given in the [InlineTextContent] object.
+                123,
+                InlineTextContent(
+                    // Placeholder tells text layout the expected size and vertical alignment of
+                    // children composable.
+                    Placeholder(
+                        width = 0.15.em,
+                        height = 0.90.em,
+                        placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .rotate(15f)
+                            .fillMaxSize()
+                            .clip(RectangleShape)
+                            .background(Color.DarkGray)
+                    )
+                }
+            )
+        )
 
+        val a: AnnotatedString = styleTextContainer {
+            styleText {
+                text = "Надстрочный текст."
+                startIndex = 7
+                endIndex = 12
+                paragraphStyle = paragraphStyle {
+                    textAlign = TextAlign.End
+                    textIndent = TextIndent(firstLine = 8.sp, restLine = 30.sp)
+                    platformStyle = PlatformParagraphStyle(includeFontPadding = false)
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Center,
+                        trim = LineHeightStyle.Trim.None
+                    )
+                }
+                decorStyle = spanStyle {
+                    color = Color.Red
+                    fontSize = 40.sp
+                }
+            }
+            styleText {
+                text = " "
+            }
+            styleUrl {
+                urlTitle = "AndroidDev"
 
+                decorStyle = spanStyle {
+                    color = Color.Green
+                }
+                focusedStyle = spanStyle {
+                    background = Color(0xFF1565C0)
+                    textDecoration = Underline
+                }
+                hoveredStyle = spanStyle {
+                    color = Color.Yellow
+                    textDecoration = Underline
+                }
+                pressedStyle = spanStyle {
+                    color = Color.Red
+                    textDecoration = TextDecoration.LineThrough
+                }
+            }
+
+            styleText {
+                text = "      "
+            }
+            styleText {
+                text = "123"
+                decorStyle = spanStyle {
+                    color = Color.Blue
+                    textDecoration = TextDecoration.LineThrough
+                }
+            }
+            styleText {
+                text = "123"
+                decorStyle = spanStyle {
+                    color = Color.Red
+                    textDecoration = Underline
+                }
+            }
+            styleText {
+                text = " "
+            }
+
+            styleUrl {
+                urlTitle = "AndroidDev"
+                url = "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
+                decorStyle = spanStyle {
+                    brush = Brush.linearGradient(
+                        gradientColors,
+                        Offset(0.0f, 0.5f)
+                    )
+                }
+            }
+        }
         enableEdgeToEdge()
         setContent {
 
             MyApplicationTheme {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-
-                    //                    val simpleText = annotatedString {
-                    //                        styleText("Красный текст", spanStyleBlock = {
-                    //                            color = Color.Red
-                    //                            fontWeight = FontWeight.Bold
-                    //                        })
-                    //                        appendSpace()
-                    //                        styleText("Синий текст", spanStyleBlock = {
-                    //                            color = Color.Blue
-                    //                            fontStyle = FontStyle.Italic
-                    //                        })
-                    //                    }
-                    //
-                    //                    // Пример с ParagraphStyle
-                    //                    val textWithAlignment = annotatedString {
-                    //                        styleText(
-                    //                            content = "Центрированный текст",
-                    //                            spanStyleBlock = {
-                    //                                fontSize = 18.sp
-                    //                                fontWeight = FontWeight.Bold
-                    //                            },
-                    //                            paragraphStyleBlock = {
-                    //                                textAlign = TextAlign.Justify
-                    //                                lineHeight = 24.sp
-                    //                            }
-                    //                        )
-                    //                        appendLine()
-                    //
-                    //                        styleText(
-                    //                            content = "Текст с отступом",
-                    //                            paragraphStyleBlock = {
-                    //                                textIndent = TextIndent(firstLine = 16.sp)
-                    //                            }
-                    //                        )
-                    //                    }
-
-                    // Пример со всеми требованиями
-                    //                    val completeExample = buildAdvancedAnnotatedString {
-                    //                        // Часть с верхним выравниванием
-                    //                        topAligned("Текст с верхним выравниванием") {
-                    //                            color = Color.Green
-                    //                            fontWeight = FontWeight.Bold
-                    //                        }
-                    //                        appendLine()
-                    //
-                    //                        // Кликабельная часть
-                    //                        link("Кликабельный текст", "https://github.com/Aghajari/AnnotatedText/tree/main") {
-                    //                            fontSize = 16.sp
-                    //                        }
-                    //                        appendSpace()
-                    //
-                    //                        // Красный текст
-                    //                        red("Красный текст") {
-                    //                            fontWeight = FontWeight.Medium
-                    //                            background = Color.LightGray
-                    //                        }
-                    //                        appendSpace()
-                    //
-                    //                        // Синий текст
-                    //                        blue("Синий текст") {
-                    //                            fontStyle = FontStyle.Italic
-                    //                        }
-                    //                        appendSpace()
-                    //
-                    //                        // Жирный текст
-                    //                        bold("Жирный текст") {
-                    //                            color = Color.DarkGray
-                    //                        }
-                    //                    }
-
-                    val fancyText = annotatedString1 {
-                        red { text("Красный текст. ") }
-                        blue { text("Синий текст. ") }
-                        bold { text("Жирный текст. ") }
-                        topAligned { text("Надстрочный текст. ") }
-                        link("https://github.com/Aghajari/AnnotatedText/tree/main") { bold { text("Кликабельная ссылка") } }
-                    }
-
-                    val a: AnnotatedString = styleTextContainer {
-                        styleTextItem {
-                            type = regular { text = "Надстрочный текст." }
-                            startIndex = 5
-                            endIndex = 9
-                            spanStyle = spanStyle {
-                                color = Color.Red
-                                textDecoration = TextDecoration.Underline
-                            }
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular(" ")
-                        }
-                        styleTextItem {
-                            type = url {
-                                tag = "AndroidDev"
-                                text =
-                                    "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
-                            }
-                            spanStyle = spanStyle {
-                                color = UiKitTheme.lightGreen
-                                textDecoration = TextDecoration.Underline
-                            }
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular("      ")
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular("123")
-                            spanStyle = spanStyle {
-                                color = Color.Blue
-                                textDecoration = TextDecoration.LineThrough
-                            }
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular("123")
-                            spanStyle = spanStyle {
-                                color = Color.Red
-                                textDecoration = TextDecoration.Underline
-                            }
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular(" ")
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Url(
-                                tag = "AndroidDev",
-                                text = "https://developer.android.com/develop/ui/compose/quick-guides/content/support-multiple-links"
-                            )
-                            spanStyle = spanStyle {
-                                brush = Brush.horizontalGradient(listOf(UiKitTheme.lightGreen, UiKitTheme.stringPink), 0.0f, 0.5f)
-                                textDecoration = TextDecoration.Underline
-                            }
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular("      ")
-                        }
-                        styleTextItem {
-                            type = StyleTextType.Regular("123")
-                            spanStyle = spanStyle {
-                                color = Color.Blue
-                                textDecoration = TextDecoration.LineThrough
-                            }
-                        }
-
-                    }
                     Text(
                         modifier = Modifier
-                            .height(300.dp)
-                            .fillMaxWidth()
-                            .layout { measurable, constraints ->
-                                val placeable = measurable.measure(
-                                    // This is how wrapContent works
-                                    constraints.copy(minWidth = 0, minHeight = 0)
-                                )
-                                layout(constraints.maxWidth, constraints.maxHeight) {
-                                    // This is how wrapContent alignment works
-                                    val x = (constraints.maxWidth - placeable.width) / 2
-                                    val y = (constraints.maxHeight - placeable.height) / 2
-                                    placeable.placeRelative(x, y)
-                                }
-                            },
+                            .fillMaxWidth(),
                         text = a,
-                        textAlign = TextAlign.Justify,
+                        textAlign = TextAlign.Center,
                         overflow = Ellipsis,
-                        maxLines = 3,
                     )
                 }
             }
@@ -235,17 +181,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-object UiKitTheme {
-    val lightGreen: Color
-        @Composable
-        @ReadOnlyComposable
-        get() = LightGreen
-
-    val stringPink: Color
-        @Composable
-        @ReadOnlyComposable
-        get() = StringPink
-}
+val gradientColors = listOf(Cyan, Color.Blue)
 
 val White = Color.White // #FFFFFF
 val WhiteSmoke = Color(0xFFF5F5F5) // #F5F5F5
