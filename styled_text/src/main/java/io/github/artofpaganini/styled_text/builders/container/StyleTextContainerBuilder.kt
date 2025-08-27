@@ -1,9 +1,11 @@
 package io.github.artofpaganini.styled_text.builders.container
 
 import androidx.compose.ui.text.AnnotatedString
-import io.github.artofpaganini.styled_text.annotations.DslStyledTextContainer
+import io.github.artofpaganini.styled_text.annotations.DslInlineContent
 import io.github.artofpaganini.styled_text.annotations.DslStyledText
+import io.github.artofpaganini.styled_text.annotations.DslStyledTextContainer
 import io.github.artofpaganini.styled_text.annotations.DslStyledUrl
+import io.github.artofpaganini.styled_text.builders.inline_content.InlineContentBuilder
 import io.github.artofpaganini.styled_text.builders.text.StyleTextBuilder
 import io.github.artofpaganini.styled_text.builders.url.StyleTextUrlBuilder
 
@@ -32,6 +34,13 @@ class StyleTextContainerBuilder : StyledTextCollector {
     @DslStyledText
     inline fun styledText(block: @DslStyledTextContainer StyleTextBuilder.() -> Unit): AnnotatedString =
         StyleTextBuilder()
+            .apply(block)
+            .build()
+            .also(block = ::collect)
+
+    @DslInlineContent
+    inline fun inlineContent(block: @DslStyledTextContainer InlineContentBuilder.() -> Unit): AnnotatedString =
+        InlineContentBuilder()
             .apply(block)
             .build()
             .also(block = ::collect)

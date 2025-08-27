@@ -28,4 +28,7 @@ val LightGrey = Color(0xFFDCDCDC) // #DDDDDD
 val LightPink = Color(0xFFFEDDEB) // #FEDDEB
 val SkyPink = Color(0xFFFFEDED) // #FFEDED
 
-val gradientColors = listOf(Cyan, Color.Blue, StringPink)
+val gradientColors1 = listOf(Cyan, Color.Blue, StringPink)
+
+val gradientColors2 = listOf(Color.Magenta, Color.Green, Purple40)
+

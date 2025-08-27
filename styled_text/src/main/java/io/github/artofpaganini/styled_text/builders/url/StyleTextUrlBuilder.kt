@@ -5,11 +5,19 @@ import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.withLink
+import io.github.artofpaganini.styled_text.annotations.DslInlineContent
 import io.github.artofpaganini.styled_text.annotations.DslStyledUrl
+import io.github.artofpaganini.styled_text.builders.container.StyledTextCollector
+import io.github.artofpaganini.styled_text.builders.inline_content.InlineContentBuilder
 
 @DslStyledUrl
-class StyleTextUrlBuilder {
+class StyleTextUrlBuilder : StyledTextCollector {
+
     private val builder = AnnotatedString.Builder()
+
+    override fun collect(text: AnnotatedString) {
+        builder.append(text)
+    }
 
     var urlTitle: String = "link"
     var url: String = ""
@@ -32,6 +40,13 @@ class StyleTextUrlBuilder {
         )
         withLink(linkAnnotation) { append(urlTitle) }
     }.toAnnotatedString()
+
+    @DslInlineContent
+    inline fun inlineContent(block: @DslStyledUrl InlineContentBuilder.() -> Unit): AnnotatedString =
+        InlineContentBuilder()
+            .apply(block)
+            .build()
+            .also(block = ::collect)
 }
 
 @DslStyledUrl

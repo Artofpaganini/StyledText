@@ -12,20 +12,20 @@ import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Класс, для стилизации параграфов в переданном тексте
- * @property [textAlign] - Выравнивание текста внутри параграфа. Если указан то имеет приоритет над стандартным TextAlign, внутри Text
- * @property [textDirection] - Направление текста
- * @property [lineHeight] - Высота строки, внутри параграфа. Рекомендуется использовать "em", вместо sp
- * @property [textIndent] - Отступы между параграфами, для первого параграфа и последующих.
- * @property [platformStyle] - Платформо-зависимые настройки
- * @property [lineHeightStyle] - Конфигурация для установки высоты строк.
- * Применяется, если параметр lineHeight и platformStyle(includeFontPadding = false) установлены
- * @property [lineBreak] - Правила переноса строк
- * @property [hyphens] - Правила переноса слов через дефис.
- * @property [textMotion] - Добавление анимационных эффектов для текста.
+ * A class for styling paragraphs in the provided text.
+ * @property [textAlign] - Text alignment inside the paragraph. If specified, it takes precedence over the standard TextAlign set within the Text component.
+ * @property [textDirection] - The direction of the text.
+ * @property [lineHeight] - The height of a line within the paragraph. It is recommended to use "em" units instead of sp.
+ * @property [textIndent] - Indentation between paragraphs, for the first and subsequent paragraphs.
+ * @property [platformStyle] - Platform-specific settings.
+ * @property [lineHeightStyle] - Configuration for setting line heights.
+ * Applied if the lineHeight parameter and platformStyle(includeFontPadding = false) are set.
+ * @property [lineBreak] - Line breaking rules.
+ * @property [hyphens] - Word hyphenation rules.
+ * @property [textMotion] - Adds animation effects to the text.
  *
- * Важно, в Compose уникально выстроена структура работы свойств стилей. Т.е. если какой то параметр не работает,
- * то вероятно для него нужно добавить еще какой то параметр, как в примере с [lineHeightStyle]
+ * Important: The structure of how style properties work in Compose is uniquely built. This means if a certain parameter isn't working,
+ * it's likely that another parameter needs to be added as well, as in the example with [lineHeightStyle].
  */
 
 class ParagraphStyleBuilder {

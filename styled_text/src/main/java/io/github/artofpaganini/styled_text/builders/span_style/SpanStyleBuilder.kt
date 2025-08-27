@@ -14,26 +14,27 @@ import androidx.compose.ui.text.style.TextGeometricTransform
 import androidx.compose.ui.unit.TextUnit
 
 /**
- * Класс, для декорирования текста annotatedString,
- * @property [brush] - Добавление brush-эффекта(градиенты)
- * @property [alpha] - Изменение прозрачности градиентов текста (только для brush)
- * @property [color] - Цвет текста
- * @property [fontSize] - Размер шрифта
- * @property [fontWeight] - Насыщенность шрифта (жирный, нормальный и т.д.)
- * @property [fontStyle] - Стиль шрифта (курсив, нормальный)
- * @property [fontFamily] - Семейство шрифтов. Комбинированные шрифты
- * @property [fontFeatureSettings] - Дополнительные настройки шрифта
- * @property [letterSpacing] - Межбуквенное расстояние
- * @property [baselineShift] - Смещение текста (вверх/вниз),
- * @property [textGeometricTransform] - Геометрические трансформации текста
- * @property [background] - Цвет фона текста
- * @property [textDecoration] - Декорации текста (подчеркивание, зачеркивание)
- * @property [shadow] - Тень текста
- * @property [drawStyle] - Стиль отрисовки текста
+ * A class for decorating text within an AnnotatedString.
+ * @property [brush] - Adds a brush effect (gradients) to the text.
+ * @property [alpha] - Changes the transparency of the text gradients (only for brush).
+ * @property [color] - The color of the text.
+ * @property [fontSize] - The font size.
+ * @property [fontWeight] - The font weight (bold, normal, etc.).
+ * @property [fontStyle] - The font style (italic, normal).
+ * @property [fontFamily] - The font family. Combined fonts.
+ * @property [fontFeatureSettings] - Additional font settings.
+ * @property [letterSpacing] - The spacing between letters.
+ * @property [baselineShift] - Shifts the text baseline (up/down).
+ * @property [textGeometricTransform] - Applies geometric transformations to the text.
+ * @property [background] - The background color of the text.
+ * @property [textDecoration] - Text decorations (underline, strikethrough).
+ * @property [shadow] - The shadow effect of the text.
+ * @property [drawStyle] - The drawing style for the text.
  *
- * Важно, в Compose уникально выстроена структура работы свойств стилей. Т.е. если какой то параметр не работает,
- * то вероятно для него нужно добавить еще какой то параметр, как в примере с [alpha]
+ * Important: The structure of how style properties work in Compose is uniquely built. This means if a certain parameter isn't working,
+ * it's likely that another parameter needs to be added as well, as in the example with [alpha].
  */
+
 class SpanStyleBuilder {
 
     var brush: Brush? = null

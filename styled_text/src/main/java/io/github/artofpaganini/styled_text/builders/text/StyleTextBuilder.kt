@@ -1,18 +1,26 @@
 package io.github.artofpaganini.styled_text.builders.text
 
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import io.github.artofpaganini.styled_text.annotations.DslStyledText
+import io.github.artofpaganini.styled_text.builders.container.StyledTextCollector
 
 @DslStyledText
-class StyleTextBuilder {
+class StyleTextBuilder : StyledTextCollector {
 
     private val builder = AnnotatedString.Builder()
+
+    override fun collect(text: AnnotatedString) {
+        builder.append(text)
+    }
 
     var text: String = ""
     var startIndex: Int? = null
     var endIndex: Int? = null
+    var inlineContentId: String = ""
+    var inlineContentIndex: Int = 0
     var decorStyle: SpanStyle? = null
     var paragraphStyle: ParagraphStyle? = null
 
@@ -20,7 +28,29 @@ class StyleTextBuilder {
     var outerParagraphStyle: ParagraphStyle? = null
 
     fun build(): AnnotatedString = builder.apply {
+        if (inlineContentId.isNotEmpty()) {
+            val index = when {
+                inlineContentIndex > text.lastIndex -> text.lastIndex
+                inlineContentIndex < 0 -> 0
+                else -> inlineContentIndex
+            }
+            val firstText = text.substring(0, index)
+            val secondTxt = text.substring(index, text.lastIndex)
+            append(firstText)
+            appendInlineContent(inlineContentId)
+            append(secondTxt)
+            applyStyles()
+        } else {
+            buildCommonText()
+        }
+    }.toAnnotatedString()
+
+    private fun AnnotatedString.Builder.buildCommonText() {
         append(text)
+        applyStyles()
+    }
+
+    private fun AnnotatedString.Builder.applyStyles() {
         val start = startIndex ?: 0
         val end = endIndex ?: length
         paragraphStyle?.let { paragraph -> addStyle(style = paragraph, start = start, end = end) }
@@ -33,7 +63,7 @@ class StyleTextBuilder {
             outerDecorStyle?.let { defaultStyle -> addStyle(defaultStyle, end, length) }
             outerParagraphStyle?.let { defaultStyle -> addStyle(defaultStyle, end, length) }
         }
-    }.toAnnotatedString()
+    }
 }
 
 @DslStyledText
