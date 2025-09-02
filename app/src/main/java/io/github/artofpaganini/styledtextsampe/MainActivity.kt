@@ -17,6 +17,7 @@ import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -56,12 +57,9 @@ class MainActivity : ComponentActivity() {
         val inlineId = "imageId"
         val inlineContent = mapOf(
             inlineId to InlineTextContent(
-                Placeholder(40.sp, 40.sp, PlaceholderVerticalAlign.TextCenter)
+                Placeholder(80.sp, 40.sp, PlaceholderVerticalAlign.Center)
             ) {
-                Image(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = ""
-                )
+                Button(onClick = { } ) { Text(text = "Button") }
             }
         )
         val title = styledText {
