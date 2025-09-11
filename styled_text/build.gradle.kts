@@ -1,10 +1,13 @@
+import com.vanniktech.maven.publish.SonatypeHost
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    `maven-publish`
-    id("com.vanniktech.maven.publish") version "0.34.0"
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
+
+group = "io.github.artofpaganini"
+version = "1.0.0"
 
 android {
     namespace = "io.github.artofpaganini.styled_text"
@@ -18,86 +21,74 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
     }
     buildFeatures {
         compose = true
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
+}
+
+mavenPublishing {
+    coordinates("io.github.artofpaganini", "styled_text", "1.0.0")
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+
+    pom {
+        name.set("StyledText")
+        description.set(
+            "A convenient wrapper around AnnotatedString, allowing you to work with it outside of Jetpack Compose code"
+        )
+        url.set("https://github.com/artofpaganini/styledtextsample")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("artofpaganini")
+                name.set("Viktar Dabrou")
+                email.set("artofpaganini@gmail.com")
+            }
+        }
+        scm {
+            connection.set("scm:git:git://github.com/artofpaganini/styledtextsample.git")
+            developerConnection.set("scm:git:ssh://github.com/artofpaganini/styledtextsample.git")
+            url.set("https://github.com/artofpaganini/styledtextsample")
         }
     }
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("androidRelease") {
-            groupId = "io.github.artofpaganini.styled_text"
-            artifactId = "styled_text_library"
-            version = "1.0"
-
-            afterEvaluate {
-                from(components["release"])
-            }
-            pom {
-                name.set("StyledText")
-                description.set("A convenient wrapper around AnnotatedString, allowing you to work it, outside of Jetpack Compose code")
-                url.set("https://github.com/Artofpaganini/StyledText")
-
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                    developers {
-                        developer {
-                            id.set("Artofpaganini")
-                            name.set("Viktar Dabrou")
-                            email.set("artofpaganini@gmail.com")
-                        }
-                    }
-                    issueManagement {
-                        system.set("GitHub")
-                        url.set("https://github.com/Artofpaganini/StyledText/issues")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/artofpaganini/StyledText.git")
-                    developerConnection.set("scm:git:ssh://github.com:artofpaganini/StyledText.git")
-                    url.set("https://github.com/artofpaganini/StyledText")
-                }
-            }
-        }
-        repositories {
-            mavenLocal()
-            maven {
-                name = "styledTextRepo"
-                url = uri(rootProject.layout.buildDirectory.dir("styledTextRepo"))
-            }
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/artofpaganini/styled_text")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/artofpaganini/styledtextsample")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
 }
 
-mavenPublishing {
-    publishToMavenCentral()
-    signAllPublications()
+tasks.withType<PublishToMavenRepository>().configureEach {
+    dependsOn(tasks.withType<Sign>())
 }
 
 dependencies {
