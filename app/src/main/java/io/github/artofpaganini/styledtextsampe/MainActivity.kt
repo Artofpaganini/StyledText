@@ -1,10 +1,10 @@
 package io.github.artofpaganini.styledtextsampe
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.InlineTextContent
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,11 +40,11 @@ import io.github.artofpaganini.styled_text.builders.container.styledTextContaine
 import io.github.artofpaganini.styled_text.builders.paragraph_style.paragraphStyle
 import io.github.artofpaganini.styled_text.builders.span_style.spanStyle
 import io.github.artofpaganini.styled_text.builders.text.styledText
+import io.github.artofpaganini.styled_text.builders.utils.withLink
 import io.github.artofpaganini.styledtextsampe.ui.theme.Purple40
 import io.github.artofpaganini.styledtextsampe.ui.theme.StyledTextSampeTheme
 import io.github.artofpaganini.styledtextsampe.ui.theme.gradientColors1
 import io.github.artofpaganini.styledtextsampe.ui.theme.gradientColors2
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +55,7 @@ class MainActivity : ComponentActivity() {
             inlineId to InlineTextContent(
                 Placeholder(80.sp, 40.sp, PlaceholderVerticalAlign.Center)
             ) {
-                Button(onClick = { } ) { Text(text = "Button") }
+                Button(onClick = { }) { Text(text = "Button") }
             }
         )
         val title = styledText {
@@ -87,9 +83,9 @@ class MainActivity : ComponentActivity() {
                     baselineShift = BaselineShift.Subscript
                 }
             }
-            styledUrl {
-                urlTitle = "gitHub"
-                url = "https://github.com/Artofpaganini"
+            styledLink {
+                anchor = "gitHut"
+                link = "https://github.com/Artofpaganini"
                 decorStyle = spanStyle {
                     color = Color.Green
                 }
@@ -254,10 +250,13 @@ fun StyledText(
     alignment: Alignment = Alignment.CenterStart,
     inlineContent: Map<String, InlineTextContent> = mapOf(),
 ) {
+
     Box(modifier = modifier, contentAlignment = alignment) {
         Text(
             inlineContent = inlineContent,
-            text = text,
+            text = text.withLink { link ->
+                Log.w("EWQ", "StyledText:HERE WE ARE ${link}")
+            },
         )
     }
 }

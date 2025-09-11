@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     `maven-publish`
+    id("com.vanniktech.maven.publish") version "0.34.0"
 }
 
 android {
@@ -11,11 +12,9 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,11 +31,6 @@ android {
     buildFeatures {
         compose = true
     }
-    buildTypes {
-        debug { }
-        release { }
-    }
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -46,9 +40,10 @@ android {
 
 publishing {
     publications {
-        create<MavenPublication>("release") {
+        create<MavenPublication>("androidRelease") {
             groupId = "io.github.artofpaganini.styled_text"
-            version = "0.1"
+            artifactId = "styled_text_library"
+            version = "1.0"
 
             afterEvaluate {
                 from(components["release"])
@@ -75,13 +70,18 @@ publishing {
                         url.set("https://github.com/Artofpaganini/StyledText/issues")
                     }
                 }
+                scm {
+                    connection.set("scm:git:git://github.com/artofpaganini/StyledText.git")
+                    developerConnection.set("scm:git:ssh://github.com:artofpaganini/StyledText.git")
+                    url.set("https://github.com/artofpaganini/StyledText")
+                }
             }
         }
         repositories {
             mavenLocal()
             maven {
-                name = "BuildDir"
-                url = uri(rootProject.layout.buildDirectory.dir("maven-repo"))
+                name = "styledTextRepo"
+                url = uri(rootProject.layout.buildDirectory.dir("styledTextRepo"))
             }
             maven {
                 name = "GitHubPackages"
@@ -93,6 +93,11 @@ publishing {
             }
         }
     }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
 }
 
 dependencies {

@@ -11,7 +11,7 @@ annotation class DslInlineContent
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
 @DslMarker
-annotation class DslStyledUrl
+annotation class DslStyledAnnotations
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.TYPE_PARAMETER)
 @DslMarker
