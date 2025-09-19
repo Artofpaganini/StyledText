@@ -242,7 +242,7 @@ val myParagraphStyle: ParagraphStyle = paragraphStyle {
  - Insert inline content (e.g., icons) directly into text.
  - Keep styling logic separate from UI rendering.
 
-<img src="media/sample.jpg" width="512">
+<img src="media/sample.jpg" width="420" height="840">
 
 And more and more....
 
