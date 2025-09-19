@@ -1,7 +1,7 @@
 #StyledTExt
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Email](https://img.shields.io/badge/Gmail-artofpaganini@gmail.com-blue.svg?style=social&logo=Gmail)](artofpaganini@gmail.com)
+[![Email](https://img.shields.io/badge/Gmail-artofpaganini@gmail.com-blue.svg?style=social&logo=Gmail)](mailto:artofpaganini@gmail.com)
 
 ---
 
@@ -230,28 +230,38 @@ val myParagraphStyle: ParagraphStyle = paragraphStyle {
   )
 }
 ```
+
+---
+
+## 🎯 What You Get
+
+ - Build complex styled `AnnotatedString` objects with minimal boilerplate.
+ - Apply multiple styles (`SpanStyle`, `ParagraphStyle`) to specific text ranges.
+ - Create clickable links with different visual states (default, hovered, focused, pressed).
+ - Combine multiple styled fragments into a single `AnnotatedString`.
+ - Insert inline content (e.g., icons) directly into text.
+ - Keep styling logic separate from UI rendering.
+
+<img src="/Users/Victor/Downloads width="512">
+
+And more and more....
+
 ---
 
 ### 📖 What This Library Does
 This library allows developers to:
 
  - Build complex AnnotatedString objects using a clean, type-safe Kotlin DSL.
-
  - Apply multiple styles (SpanStyle, ParagraphStyle) to specific text ranges.
-
  - Easily create clickable links with different visual states (default, hovered, focused, pressed).
-
  - Combine multiple styled fragments into a single AnnotatedString.
-
  - Manage inline content (e.g., icons) inside text.
-
  - Keep text styling logic separate from UI rendering.
 
 ---
 
 ###  📬 Contact
-Author: artofpaganini
-📧 Email: [![Email](https://img.shields.io/badge/Gmail-artofpaganini@gmail.com-blue.svg?style=social&logo=Gmail)](artofpaganini@gmail.com)
+Email: [![Email](https://img.shields.io/badge/Gmail-artofpaganini@gmail.com-blue.svg?style=social&logo=Gmail)](mailto:artofpaganini@gmail.com)
 
 ---
 
