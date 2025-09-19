@@ -30,6 +30,7 @@ Here are some key concepts of the library, more details can be found in the docu
 | StyledLinkBuilder / styledLink                                | Builder for a single clickable link fragment (LinkAnnotation.Clickable).         |
 | SpanStyleBuilder / decorStyle or outerDecorStyle              | Builder for creating SpanStyle to decorate a text/link fragment.                 |
 | ParagraphStyleBuilder / paragraphStyle or outerParagraphStyle | Builder for creating ParagraphStyle (alignment, indents, line height, etc.)  |
+| InlineContentBuilder / inlineContent | Builder for creating Inline content (diff kinds of Composable func, inside annotatedString)  |
 
 ---
 
