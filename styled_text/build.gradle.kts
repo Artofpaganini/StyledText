@@ -42,7 +42,7 @@ android {
 }
 
 mavenPublishing {
-    coordinates("io.github.artofpaganini", "styled_text", "1.0.0")
+    coordinates("io.github.artofpaganini", "styled_text", "1.0.1")
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
