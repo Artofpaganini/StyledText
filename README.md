@@ -242,7 +242,7 @@ val myParagraphStyle: ParagraphStyle = paragraphStyle {
  - Insert inline content (e.g., icons) directly into text.
  - Keep styling logic separate from UI rendering.
 
-<img src="/Users/Victor/Downloads width="512">
+<img src="media/sample.jpg" width="512">
 
 And more and more....
 
@@ -255,7 +255,7 @@ This library allows developers to:
  - Apply multiple styles (SpanStyle, ParagraphStyle) to specific text ranges.
  - Easily create clickable links with different visual states (default, hovered, focused, pressed).
  - Combine multiple styled fragments into a single AnnotatedString.
- - Manage inline content (e.g., icons) inside text.
+ - Manage inline content (e.g., icons, buttons...) inside text.
  - Keep text styling logic separate from UI rendering.
 
 ---
