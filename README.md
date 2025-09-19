@@ -1,4 +1,4 @@
-#StyledTExt
+## StyledText
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Email](https://img.shields.io/badge/Gmail-artofpaganini@gmail.com-blue.svg?style=social&logo=Gmail)](mailto:artofpaganini@gmail.com)
