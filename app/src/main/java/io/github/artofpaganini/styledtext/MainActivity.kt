@@ -1,4 +1,4 @@
-package io.github.artofpaganini.styledtextsampe
+package io.github.artofpaganini.styledtext
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,25 +40,37 @@ import androidx.compose.ui.text.style.TextDecoration.Companion.Underline
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.artofpaganini.styled_text.builders.container.styledTextContainer
+import io.github.artofpaganini.styled_text.builders.link.styledLink
 import io.github.artofpaganini.styled_text.builders.paragraph_style.paragraphStyle
 import io.github.artofpaganini.styled_text.builders.span_style.spanStyle
 import io.github.artofpaganini.styled_text.builders.text.styledText
 import io.github.artofpaganini.styled_text.builders.utils.withLink
-import io.github.artofpaganini.styledtextsampe.ui.theme.Purple40
-import io.github.artofpaganini.styledtextsampe.ui.theme.StyledTextSampeTheme
-import io.github.artofpaganini.styledtextsampe.ui.theme.gradientColors1
-import io.github.artofpaganini.styledtextsampe.ui.theme.gradientColors2
+import io.github.artofpaganini.styledtext.ui.theme.Purple40
+import io.github.artofpaganini.styledtext.ui.theme.StyledTextSampeTheme
+import io.github.artofpaganini.styledtext.ui.theme.gradientColors1
+import io.github.artofpaganini.styledtext.ui.theme.gradientColors2
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val inlineId = "imageId"
-        val inlineContent = mapOf(
-            inlineId to InlineTextContent(
-                Placeholder(80.sp, 40.sp, PlaceholderVerticalAlign.Center)
+        val buttonId = "buttonId"
+        val inlineButtonContent = mapOf(
+            buttonId to InlineTextContent(
+                Placeholder(100.sp, 40.sp, PlaceholderVerticalAlign.Center)
             ) {
-                Button(onClick = { }) { Text(text = "Button") }
+                Button(onClick = {
+                    Log.w("EWQ", "onCreate: CLICK!!!", )
+                }) { Text(text = "Button") }
+            }
+        )
+
+        val iconId = "iconId"
+        val inlineIconContent = mapOf(
+            iconId to InlineTextContent(
+                Placeholder(20.sp, 20.sp, PlaceholderVerticalAlign.Center)
+            ) {
+                Icon(Icons.Default.MailOutline, contentDescription = "")
             }
         )
         val title = styledText {
@@ -84,7 +99,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
             styledLink {
-                anchor = "gitHut"
+                anchor = "My gitHub (Check logcat \"EWQ\")"
                 link = "https://github.com/Artofpaganini"
                 decorStyle = spanStyle {
                     color = Color.Green
@@ -160,15 +175,15 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val textWithIcon: AnnotatedString = styledTextContainer {
+        val textWithBtn: AnnotatedString = styledTextContainer {
             styledText {
-                text = "Text where icon here, and also in the end"
+                text = "Text where button here, and also in the end"
                 startIndex = 7
                 endIndex = 12
                 decorStyle = spanStyle {
                     color = Color.Red
                 }
-                inlineContentId = inlineId
+                inlineContentId = buttonId
                 inlineContentIndex = 20
 
                 outerDecorStyle = spanStyle {
@@ -180,7 +195,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
             inlineContent {
-                id = inlineId
+                id = buttonId
             }
         }
 
@@ -197,6 +212,30 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+
+        val linkWithIcon: AnnotatedString = styledLink {
+            anchor = "My gitHub(Check logcat \"EWQ\") "
+            link = "https://github.com/Artofpaganini"
+            decorStyle = spanStyle {
+                color = Color.Green
+            }
+            focusedStyle = spanStyle {
+                background = Color(0xFF1565C0)
+                textDecoration = TextDecoration.None
+            }
+            hoveredStyle = spanStyle {
+                color = Color.Red
+                textDecoration = Underline
+            }
+            pressedStyle = spanStyle {
+                color = Color.Red
+                textDecoration = TextDecoration.LineThrough
+            }
+            inlineContent {
+                id = iconId
+            }
+        }
+
 
         enableEdgeToEdge()
         setContent {
@@ -229,13 +268,18 @@ class MainActivity : ComponentActivity() {
                     )
                     StyledText(
                         modifier = textModifier,
-                        inlineContent = inlineContent,
-                        text = textWithIcon,
+                        inlineContent = inlineButtonContent,
+                        text = textWithBtn,
+                    )
+                    StyledText(
+                        modifier = textModifier,
+                        text = textWithParagraphSettings,
                     )
 
                     StyledText(
                         modifier = textModifier,
-                        text = textWithParagraphSettings,
+                        inlineContent = inlineIconContent,
+                        text = linkWithIcon,
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package io.github.artofpaganini.styledtextsampe.ui.theme
+package io.github.artofpaganini.styledtext.ui.theme
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan

@@ -1,4 +1,4 @@
-package io.github.artofpaganini.styledtextsampe
+package io.github.artofpaganini.styledtext
 
 import org.junit.Test
 

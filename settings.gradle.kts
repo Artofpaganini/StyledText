@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "StyledTextSample"
+rootProject.name = "StyledText"
 include(":app")
 include(":styled_text")

@@ -1,4 +1,4 @@
-package io.github.artofpaganini.styledtextsampe
+package io.github.artofpaganini.styledtext
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

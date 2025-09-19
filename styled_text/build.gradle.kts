@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.artofpaganini"
-version = "1.0.0"
+version = "1.0.1"
 
 android {
     namespace = "io.github.artofpaganini.styled_text"
@@ -52,7 +52,7 @@ mavenPublishing {
         description.set(
             "A convenient wrapper around AnnotatedString, allowing you to work with it outside of Jetpack Compose code"
         )
-        url.set("https://github.com/artofpaganini/styledtextsample")
+        url.set("https://github.com/artofpaganini/styledtext")
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
@@ -67,9 +67,9 @@ mavenPublishing {
             }
         }
         scm {
-            connection.set("scm:git:git://github.com/artofpaganini/styledtextsample.git")
-            developerConnection.set("scm:git:ssh://github.com/artofpaganini/styledtextsample.git")
-            url.set("https://github.com/artofpaganini/styledtextsample")
+            connection.set("scm:git:git://github.com/artofpaganini/styledtext.git")
+            developerConnection.set("scm:git:ssh://github.com/artofpaganini/styledtext.git")
+            url.set("https://github.com/artofpaganini/styledtext")
         }
     }
 }
@@ -78,7 +78,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/artofpaganini/styledtextsample")
+            url = uri("https://maven.pkg.github.com/artofpaganini/styledtext")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")

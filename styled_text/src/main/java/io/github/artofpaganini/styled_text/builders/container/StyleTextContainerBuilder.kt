@@ -2,11 +2,11 @@ package io.github.artofpaganini.styled_text.builders.container
 
 import androidx.compose.ui.text.AnnotatedString
 import io.github.artofpaganini.styled_text.annotations.DslInlineContent
-import io.github.artofpaganini.styled_text.annotations.DslStyledAnnotations
+import io.github.artofpaganini.styled_text.annotations.DslStyledLink
 import io.github.artofpaganini.styled_text.annotations.DslStyledText
 import io.github.artofpaganini.styled_text.annotations.DslStyledTextContainer
 import io.github.artofpaganini.styled_text.builders.inline_content.InlineContentBuilder
-import io.github.artofpaganini.styled_text.builders.link.StyleTextLinkBuilder
+import io.github.artofpaganini.styled_text.builders.link.StyledLinkBuilder
 import io.github.artofpaganini.styled_text.builders.text.StyleTextBuilder
 
 internal interface StyledTextCollector {
@@ -31,9 +31,9 @@ class StyleTextContainerBuilder : StyledTextCollector {
             .build()
             .also(block = ::collect)
 
-    @DslStyledAnnotations
-    inline fun styledLink(block: @DslStyledTextContainer StyleTextLinkBuilder.() -> Unit): AnnotatedString =
-        StyleTextLinkBuilder()
+    @DslStyledLink
+    inline fun styledLink(block: @DslStyledTextContainer StyledLinkBuilder.() -> Unit): AnnotatedString =
+        StyledLinkBuilder()
             .apply(block)
             .build()
             .also(block = ::collect)
